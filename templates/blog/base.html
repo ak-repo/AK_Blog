@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCanvas - A Developer's Blog</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-content">
+            <div class="branding">
+                {# Make sure you have a URL pattern named 'home' in your urls.py #}
+                <h1 class="site-title"><a href="">Code<span>Canvas</span></a></h1>
+                <p class="tagline">Exploring software development, one commit at a time.</p>
+            </div>
+
+            <nav class="main-navigation" aria-label="Main navigation">
+                <ul>
+                    
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+                    <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'blog_list' or request.resolver_match.url_name == 'post_detail' %}active{% endif %}">Blog</a></li>
+                    <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
+                    <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
+                    {# Add other links as needed #}
+                </ul>
+            </nav>
+            <!-- Theme Toggle Removed -->
+        </div>
+    </header>
+
+    <div class="page-wrapper">
+        <aside class="sidebar">
+            <nav class="recent-posts-nav">
+                <h3>Recent Posts</h3>
+                <ul>
+                    {% for post in posts %} {# Assuming 'posts' context is available here #}
+                    <li><a href="#">{{ post.title }}</a></li> {# TODO: Replace # with actual post URL #}
+                    {% empty %}
+                    <li>No recent posts.</li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            <section class="about-section">
+                <h3>About</h3>
+                <p>Hi, I'm AK — a software engineer who builds and writes about full-stack systems and dev tools.</p>
+            </section>
+        </aside>
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <p>© {% now "Y" %} CodeCanvas. All rights reserved.</p>
+        {# Add other footer links if needed #}
+    </footer>
+
+</body>
+</html>

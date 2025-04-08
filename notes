@@ -1,0 +1,55 @@
+Core Features
+
+1. User Authentication – Sign up, login, logout, and profile management. - 
+
+
+2. Post Management – Create, update, delete, and list blog posts.
+
+
+3. Categories & Tags – Organize posts by categories and tags.
+
+
+4. Comments System – Users can comment on posts.
+
+
+5. Likes & Reactions – Add like, dislike, or other reactions.
+
+
+6. Search & Filtering – Search posts by title, content, category, or author.
+
+
+7. Pagination – Display a limited number of posts per page.
+
+
+8. Rich Text Editor – Use a WYSIWYG editor (like CKEditor) for writing posts.
+
+
+9. Media Upload – Allow users to add images to their posts.
+
+
+10. SEO Optimization – Use Django’s SEO tools for better search rankings.
+
+
+
+Advanced Features (Optional)
+
+1. Draft & Publish System – Allow users to save drafts before publishing.
+
+
+2. User Profiles – Display user details, including their posts.
+
+
+3. Subscriptions & Notifications – Notify users when new posts are published.
+
+
+4. REST API – Use Django REST Framework (DRF) to provide APIs for the blog.
+
+
+5. Admin Panel Customization – Improve Django’s admin panel for better post management.
+
+
+6. Markdown Support – Use Markdown for writing posts.
+
+
+7. RSS Feeds – Generate an RSS feed for blog updates.
+
