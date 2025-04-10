@@ -2,38 +2,14 @@
 
 {% block content %}
     <h2 class="page-title">Blog Posts</h2> {# Optional: Add a title for the page content #}
-    {% for post in posts %}
+    {% for post in post_list %}
     <article class="post-card">
-        <h3><a href="#">{{ post.title }}</a></h3> {# TODO: Replace # with actual post URL #}
+        <h3>{{ post.title }}</h3> {# TODO: Replace # with actual post URL #}
         <p class="meta">{{ post.created_date|date:"F d, Y" }}</p> {# Format date nicely #}
         <div class="post-excerpt">
             {{ post.text|linebreaks|truncatewords:50 }} {# Show an excerpt #}
         </div>
-        <a href="#" class="read-more">Read More →</a> {# TODO: Replace # with actual post URL #}
-    </article>
-    <article class="post-card">
-        <h3><a href="#">{{ post.title }}</a></h3> {# TODO: Replace # with actual post URL #}
-        <p class="meta">{{ post.created_date|date:"F d, Y" }}</p> {# Format date nicely #}
-        <div class="post-excerpt">
-            {{ post.text|linebreaks|truncatewords:50 }} {# Show an excerpt #}
-        </div>
-        <a href="#" class="read-more">Read More →</a> {# TODO: Replace # with actual post URL #}
-    </article>
-    <article class="post-card">
-        <h3><a href="#">{{ post.title }}</a></h3> {# TODO: Replace # with actual post URL #}
-        <p class="meta">{{ post.created_date|date:"F d, Y" }}</p> {# Format date nicely #}
-        <div class="post-excerpt">
-            {{ post.text|linebreaks|truncatewords:50 }} {# Show an excerpt #}
-        </div>
-        <a href="#" class="read-more">Read More →</a> {# TODO: Replace # with actual post URL #}
-    </article>
-    <article class="post-card">
-        <h3><a href="#">{{ post.title }}</a></h3> {# TODO: Replace # with actual post URL #}
-        <p class="meta">{{ post.created_date|date:"F d, Y" }}</p> {# Format date nicely #}
-        <div class="post-excerpt">
-            {{ post.text|linebreaks|truncatewords:50 }} {# Show an excerpt #}
-        </div>
-        <a href="#" class="read-more">Read More →</a> {# TODO: Replace # with actual post URL #}
+        <a href="{{ post.get_absolute_url }}" class="read-more">Read More →</a> {# TODO: Replace # with actual post URL #}
     </article>
     {% empty %}
         <p>No posts have been published yet.</p>

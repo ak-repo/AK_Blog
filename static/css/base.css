@@ -400,3 +400,123 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 0.8rem;
     }
 }
+
+
+/* === Blog Post Form Styling - Refined Colors === */
+.post-new-form {
+    background: #fafafa;
+    padding: 2rem 2.5rem;
+    border-radius: 10px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.post-new-form h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #1a202c;
+    border-bottom: 2px solid #3182ce;
+    padding-bottom: 0.5rem;
+    text-align: center;
+}
+
+.post-new-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.post-new-form label {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.3rem;
+}
+
+.post-new-form input[type="text"],
+.post-new-form input[type="url"],
+.post-new-form textarea,
+.post-new-form select {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e0;
+    background: #ffffff;
+    color: #2d3748;
+    border-radius: 6px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    resize: vertical;
+}
+
+.post-new-form input[type="text"]:focus,
+.post-new-form input[type="url"]:focus,
+.post-new-form textarea:focus,
+.post-new-form select:focus {
+    border-color:  var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+    outline: none;
+}
+
+.post-new-form textarea {
+    min-height: 150px;
+}
+
+.post-new-form input[type="submit"] {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.post-new-form input[type="submit"]:hover {
+    background-color: var(--primary-color);
+}
+
+.post-new-form .errorlist {
+    color: #e53e3e;
+    margin-top: -0.5rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    list-style: none;
+    padding-left: 0;
+}
+
+
+/* Base button styles */
+.btn {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    display: inline-block;
+    margin: 10px 0;
+  }
+  
+  .btn-edit {
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid  var(--primary-color);
+  }
+  
+  .btn-edit:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .btn-delete {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #dc3545;
+  }
+  
+  .btn-delete:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+  }
+  

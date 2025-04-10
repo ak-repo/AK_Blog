@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeCanvas - A Developer's Blog</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    {% comment %} <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"> {% endcomment %}
 </head>
 <body>
-
     <header class="site-header">
         <div class="header-content">
             <div class="branding">
@@ -20,11 +19,12 @@
 
             <nav class="main-navigation" aria-label="Main navigation">
                 <ul>
-                    
-                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+                    <li><a href="{% url 'post_list' %}" class="nav-link {% if request.resolver_match.url_name == 'post_list' %}active{% endif %}">Home</a></li>
                     <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'blog_list' or request.resolver_match.url_name == 'post_detail' %}active{% endif %}">Blog</a></li>
                     <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
                     <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
+                    <li><a href="{% url 'post_new' %}" class="nav-link {% if request.resolver_match.url_name == 'post_new' %}active{% endif %}">Post</a></li>
+        
                     {# Add other links as needed #}
                 </ul>
             </nav>
@@ -38,7 +38,7 @@
                 <h3>Recent Posts</h3>
                 <ul>
                     {% for post in posts %} {# Assuming 'posts' context is available here #}
-                    <li><a href="#">{{ post.title }}</a></li> {# TODO: Replace # with actual post URL #}
+                    <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li> {# TODO: Replace # with actual post URL #}
                     {% empty %}
                     <li>No recent posts.</li>
                     {% endfor %}
