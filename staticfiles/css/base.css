@@ -157,16 +157,17 @@ h1, h2, h3, h4, h5, h6 {
 .page-wrapper {
     display: flex;
     flex: 1;
-    max-width: 1200px;
+    max-width: 1300px;
     width: 100%;
-    margin: 2rem auto;
+    margin: 2rem ;
     padding: 0 1rem;
     gap: 2rem;
 }
 
 /* === Sidebar === */
 .sidebar {
-    width: 280px;
+    
+    width: 250px;
     flex-shrink: 0;
     background: var(--sidebar-bg);
     padding: 1.5rem;

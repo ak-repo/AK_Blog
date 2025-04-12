@@ -23,7 +23,7 @@
                     <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'blog_list' or request.resolver_match.url_name == 'post_detail' %}active{% endif %}">Blog</a></li>
                     <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
                     <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
-                    <li><a href="{% url 'post_new' %}" class="nav-link {% if request.resolver_match.url_name == 'post_new' %}active{% endif %}">Post</a></li>
+                    <li><a href="{% url 'post_new' %}" class="nav-link {% if request.resolver_match.url_name == 'post_new' %}active{% endif %}">New Post</a></li>
         
                     {# Add other links as needed #}
                 </ul>
@@ -53,6 +53,10 @@
         <main class="main-content">
             {% block content %}{% endblock %}
         </main>
+        <aside>
+
+        </aside>
+
     </div>
 
     <footer class="site-footer">
