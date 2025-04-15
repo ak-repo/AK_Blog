@@ -4,65 +4,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeCanvas - A Developer's Blog</title>
+    {# Dynamically set title in child templates if needed #}
+    <title>{% block title %}CodeCanvas - A Developer's Blog{% endblock title %}</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    {% comment %} <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"> {% endcomment %}
+    {# Load fonts if needed #}
+    {# <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"> #}
+    {% block extra_head %}{% endblock extra_head %} {# For page-specific head elements #}
 </head>
 <body>
     <header class="site-header">
         <div class="header-content">
             <div class="branding">
-                {# Make sure you have a URL pattern named 'home' in your urls.py #}
+                {# Link site title to the blog list page #}
                 <h1 class="site-title"><a href="">Code<span>Canvas</span></a></h1>
                 <p class="tagline">Exploring software development, one commit at a time.</p>
             </div>
 
             <nav class="main-navigation" aria-label="Main navigation">
                 <ul>
-                    <li><a href="{% url 'post_list' %}" class="nav-link {% if request.resolver_match.url_name == 'post_list' %}active{% endif %}">Home</a></li>
-                    <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'blog_list' or request.resolver_match.url_name == 'post_detail' %}active{% endif %}">Blog</a></li>
-                    <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
-                    <li><a href="" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
+                    <li><a href="{% url "home" %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+                    <li><a href="{% url 'post_list' %}" class="nav-link {% if request.resolver_match.url_name == 'post_list' or request.resolver_match.url_name == 'post_detail' %}active{% endif %}">Blog</a></li>
+                    {# TODO: Create views/URLs and update href for About/Contact #}
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
+                    {% comment %} {% if user.is_authenticated %}
                     <li><a href="{% url 'post_new' %}" class="nav-link {% if request.resolver_match.url_name == 'post_new' %}active{% endif %}">New Post</a></li>
-        
-                    {# Add other links as needed #}
+                    {% endif %} {% endcomment %}
                 </ul>
             </nav>
-            <!-- Theme Toggle Removed -->
+
+            <div class="profile-dropdown-container">
+                {# Ensure 'images/profile.svg' exists in static files #}
+                <img src="{% static 'images/profile.svg' %}" alt="Profile Menu" class="profile-icon" onclick="toggleDropdown()" />
+                <div id="profileDropdown" class="dropdown-menu hidden">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'post_new' %}">New Blog</a>
+                        <a href="#">Profile</a>  {# Replace with actual profile URL when ready #}
+
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <a><button type="submit" >
+                                Logout
+                            </button></a>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}">Login</a>
+                        <a href="{% url "signup" %}">Sign Up</a>  {# If you have a signup view #}
+                    {% endif %}
+
+                </div>
+            </div>
         </div>
     </header>
 
-    <div class="page-wrapper">
-        <aside class="sidebar">
-            <nav class="recent-posts-nav">
-                <h3>Recent Posts</h3>
-                <ul>
-                    {% for post in posts %} {# Assuming 'posts' context is available here #}
-                    <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li> {# TODO: Replace # with actual post URL #}
-                    {% empty %}
-                    <li>No recent posts.</li>
-                    {% endfor %}
-                </ul>
-            </nav>
-            <section class="about-section">
-                <h3>About</h3>
-                <p>Hi, I'm AK — a software engineer who builds and writes about full-stack systems and dev tools.</p>
-            </section>
-        </aside>
-
-        <main class="main-content">
-            {% block content %}{% endblock %}
-        </main>
-        <aside>
-
-        </aside>
-
-    </div>
+    {# --- Main Content Area --- #}
+    {# The entire page structure (like sidebar+content) will go inside this block in child templates #}
+    {% block content %}
+    {% endblock content %}
+    {# --- End Main Content Area --- #}
 
     <footer class="site-footer">
         <p>© {% now "Y" %} CodeCanvas. All rights reserved.</p>
         {# Add other footer links if needed #}
     </footer>
+
+    {# --- Scripts --- #}
+    <script>
+        function toggleDropdown() {
+            const menu = document.getElementById("profileDropdown");
+            // Check if menu exists before toggling
+            if(menu) {
+                menu.classList.toggle("hidden");
+            }
+        }
+
+        // Optional: Hide dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById("profileDropdown");
+            if (dropdown) {
+                const icon = document.querySelector('.profile-icon');
+                // Check if click target exists and is outside dropdown & icon
+                if (event.target && !dropdown.contains(event.target) && icon && !icon.contains(event.target)) {
+                    dropdown.classList.add("hidden");
+                }
+            }
+        });
+    </script>
+    {% block extra_scripts %}{% endblock extra_scripts %} {# For page-specific scripts #}
 
 </body>
 </html>

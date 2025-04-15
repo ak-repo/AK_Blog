@@ -1,0 +1,33 @@
+{% extends "blog/base.html" %} {# Assuming base.html is in your app's template dir #}
+{% load static %}
+
+{% block title %}Sign Up - CodeCanvas{% endblock title %}
+
+{% block content %}
+    <div class="content-container"> {# Use the single-column container #}
+        <div class="auth-form signup-form"> {# Use common 'auth-form' and specific 'signup-form' #}
+            <h2>Sign Up</h2>
+
+            {# Display non-field errors (e.g., username already exists) if needed #}
+            {% if form.non_field_errors %}
+                <div class="error-summary">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }} {# Renders fields with labels in <p> tags #}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button> {# Use button classes #}
+                </div>
+                <div class="auth-links">
+                     {# TODO: Add URL name for login #}
+                    <span>Already have an account?</span> <a href="{% url "login" %}">Log In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

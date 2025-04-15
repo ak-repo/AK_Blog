@@ -1,7 +1,14 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.shortcuts import render
+
 from .models import Post
+
+
+class HomeView(TemplateView):
+    template_name = "blog/home.html"
 
 
 class BloglistView(ListView):
@@ -14,10 +21,15 @@ class BlogDetailView(DetailView):
     template_name = "blog/post_detail.html"
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = "blog/post_new.html"
-    fields = ["title", "author", "text"]
+    fields = ["title", "text"]  # Don't include 'author'
+    success_url = reverse_lazy("post_list")  # Update if needed
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user  # Assign the logged-in user as author
+        return super().form_valid(form)
 
 
 class BlogUpdateView(UpdateView):

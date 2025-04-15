@@ -25,8 +25,11 @@ SECRET_KEY = "django-insecure-#=pd!txx4k9wgc9@!am$06qg82tu#3sd$_@t)$j)e1%exu@!mf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["yourusername.pythonanywhere.com", "www.yourcustomdomain.com"]
-
+ALLOWED_HOSTS = [
+    "yourusername.pythonanywhere.com",
+    "www.yourcustomdomain.com",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -122,14 +125,19 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 # Static files source dir (for development)
-STATICFILES_DIRS = [BASE_DIR / "staticfiles"]  # <- rename or change to a separate folder
+STATICFILES_DIRS = [
+    BASE_DIR / "staticfiles"
+]  # <- rename or change to a separate folder
 
 # Static files destination (for collectstatic in production)
 STATIC_ROOT = BASE_DIR / "static"  # <- this is where everything gets collected
-
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"

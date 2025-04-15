@@ -1,19 +1,37 @@
+/* === CodeCanvas Blog - base.css === */
+
 /* === Base Setup & Variables === */
 :root {
-    --primary-color: #0077cc;
-    --primary-hover-color: #005799;
-    --text-color: #333;
-    --bg-color: #f5f7fa;
-    --card-bg: #ffffff;
-    --border-color: #ddd;
-    --header-bg: rgba(255, 255, 255, 0.85);
-    --sidebar-bg: #ffffff;
-    --muted-text-color: #555;
-    --font-family: 'Inter', sans-serif;
-    --transition-speed: 0.3s;
+    --primary-color: #d9534f;
+    --primary-hover-color: #9f370a;
+    --secondary-color: #e2e8f0; /* Light grey for secondary buttons */
+    --secondary-hover-color: #cbd5e0; /* Darker grey for secondary hover */
+    --secondary-text-color: #4a5568; /* Text for secondary buttons */
+    --danger-color: #e53e3e; /* Red for delete */
+    --danger-hover-color: #c53030; /* Darker red */
+    --text-color: #333; /* Main text */
+    --heading-color: #1a202c; /* Darker for headings */
+    --muted-text-color: #555; /* Tagline, meta, help text */
+    --link-color: var(--primary-color);
+    --link-hover-color: var(--primary-hover-color);
+    --bg-color: #f5f7fa; /* Main background */
+    --card-bg: #ffffff; /* Cards, forms, footer background */
+    --input-bg: #fdfdff; /* Input background */
+    --border-color: #e2e8f0; /* Use a slightly softer border */
+    --header-bg: rgba(255, 255, 255, 0.9);
+    --sidebar-bg: var(--card-bg); /* Sidebar matches card background */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --transition-speed: 0.2s;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 5px 15px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+    --border-radius: 8px; /* Consistent border radius */
+    --border-radius-sm: 6px; /* Smaller radius for inputs/buttons */
+    --container-max-width: 1200px; /* Max width for layouts */
+    --content-max-width: 900px; /* Max width for single column content */
 }
 
-/* ... (keep existing *, html, body, a, img, h1-h6 styles) ... */
+/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -22,6 +40,7 @@
 
 html {
     scroll-behavior: smooth;
+    font-size: 100%; /* Base font size */
 }
 
 body {
@@ -32,37 +51,46 @@ body {
     flex-direction: column;
     min-height: 100vh;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* Smoother fonts */
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-    color: var(--primary-color);
+    color: var(--link-color);
     text-decoration: none;
     transition: color var(--transition-speed);
 }
 
 a:hover {
-    color: var(--primary-hover-color);
-    text-decoration: underline;
+    color: var(--link-hover-color);
+    text-decoration: none;
 }
 
 img {
     max-width: 100%;
     height: auto;
     display: block;
+    vertical-align: middle;
 }
 
 h1, h2, h3, h4, h5, h6 {
     line-height: 1.3;
     margin-bottom: 0.75em;
+    font-weight: 700; /* Bold headings */
+    color: var(--heading-color);
 }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
 
 
 /* === Header === */
 .site-header {
     background: var(--header-bg);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border-color);
-    padding: 0.8rem 2rem; /* Adjusted padding slightly */
+    padding: 0.7rem 2rem;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -70,48 +98,45 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header-content {
-    max-width: 1200px;
+    max-width: var(--container-max-width);
     margin: 0 auto;
     display: flex;
-    justify-content: space-between; /* Keep space between branding and nav */
-    align-items: center; /* Vertically center branding and nav */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 1rem; /* Default gap */
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
 }
 
 .branding {
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .site-title {
-    font-size: 1.7rem; /* Slightly adjust if needed */
+    font-size: 1.6rem;
     font-weight: 800;
     margin: 0;
-    color: var(--text-color);
+    color: var(--heading-color);
+    line-height: 1.1;
 }
-.site-title a {
-    color: inherit;
-    text-decoration: none;
-}
-.site-title a:hover {
-    text-decoration: none;
-}
-
-.site-title span {
-    color: var(--primary-color);
-}
+.site-title a { color: inherit; text-decoration: none; }
+.site-title a:hover { text-decoration: none; }
+.site-title span { color: var(--primary-color); }
 
 .tagline {
-    font-size: 0.8rem; /* Adjusted size */
+    font-size: 0.75rem;
     color: var(--muted-text-color);
-    margin-top: 0.1rem; /* Fine-tune spacing */
+    margin-top: 0.1rem;
     margin-bottom: 0;
-    max-width: 300px; /* Optional: prevent tagline from getting too long */
+    max-width: 300px;
+    line-height: 1.3;
 }
 
-/* === Header Navigation (NEW) === */
+/* === Header Navigation === */
 .main-navigation {
-    /* Takes remaining space if needed, aligns itself to the right */
+    margin-left: auto;
+    margin-right: 1rem;
 }
 
 .main-navigation ul {
@@ -119,63 +144,125 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     margin: 0;
     display: flex;
-    flex-wrap: wrap; /* Allow nav items to wrap on smaller screens */
-    gap: 0.5rem 1.8rem; /* Vertical gap, Horizontal gap */
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
     align-items: center;
 }
 
-.main-navigation li {
-    /* Individual list items */
-}
-
-.main-navigation .nav-link { /* Target links via the class */
+.main-navigation .nav-link {
     text-decoration: none;
     color: var(--text-color);
-    font-weight: 500; /* Regular weight for nav */
-    padding: 0.4rem 0.2rem; /* Add padding for click area, less horizontal needed due to gap */
-    border-bottom: 2px solid transparent; /* Placeholder for active state */
+    font-weight: 500;
+    padding: 0.4rem 0.2rem;
+    border-bottom: 2px solid transparent;
     transition: color var(--transition-speed), border-color var(--transition-speed);
-    display: inline-block; /* Needed for padding/border */
+    display: inline-block;
+    position: relative;
 }
 
-.main-navigation .nav-link:hover {
-    color: var(--primary-color);
-    text-decoration: none; /* Keep no underline on hover */
-}
+.main-navigation .nav-link:hover { color: var(--primary-color); }
 
-/* Style for the active navigation link */
 .main-navigation .nav-link.active {
     color: var(--primary-color);
-    font-weight: 600; /* Make active link slightly bolder */
-    border-bottom-color: var(--primary-color); /* Underline active link */
+    font-weight: 600;
+    border-bottom-color: var(--primary-color);
+}
+
+/* === Profile Icon & Dropdown Styling === */
+.profile-dropdown-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: block;
+    border: 1px solid transparent;
+}
+
+.profile-icon:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm); /* Use variable */
+    box-shadow: var(--shadow-md); /* Use variable */
+    min-width: 140px;
+    z-index: 1000;
+    padding: 0.5rem 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.dropdown-menu:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.6rem 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.dropdown-menu button {
+    background: none; border: none; padding: 0; cursor: pointer;
+    
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+    color: var(--primary-color);
+}
+
+.hidden {
+   /* Uses opacity/visibility for transitions */
 }
 
 
-/* ... (keep existing Page Wrapper, Sidebar, Main Content, Post Card, Footer styles) ... */
+/* === Layout Styles (Used via Template Inheritance) === */
 
-/* === Page Wrapper (Flex Container) === */
+/* 1. Two-Column Layout */
 .page-wrapper {
     display: flex;
     flex: 1;
-    max-width: 1300px;
+    max-width: var(--container-max-width);
     width: 100%;
-    margin: 2rem ;
+    margin: 2rem auto;
     padding: 0 1rem;
     gap: 2rem;
 }
 
-/* === Sidebar === */
 .sidebar {
-    
-    width: 250px;
+    width: 280px;
     flex-shrink: 0;
     background: var(--sidebar-bg);
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
     align-self: flex-start;
     position: sticky;
-    top: 85px; /* Adjust based on header height + gap */
+    top: 85px;
     max-height: calc(100vh - 100px);
     overflow-y: auto;
 }
@@ -187,43 +274,32 @@ h1, h2, h3, h4, h5, h6 {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--border-color);
     font-weight: 600;
+    color: var(--heading-color);
 }
 .sidebar > *:first-child > h3,
-.sidebar > h3:first-child {
-    margin-top: 0;
-}
+.sidebar > h3:first-child { margin-top: 0; }
+.sidebar ul { list-style: none; padding-left: 0; margin: 0; }
+.sidebar ul li { margin-bottom: 0.5rem; }
+.sidebar ul li a { font-size: 0.95rem; display: block; padding: 0.2rem 0; color: var(--text-color); }
+.sidebar ul li a:hover { text-decoration: none; color: var(--primary-hover-color); }
+.about-section p { font-size: 0.9rem; line-height: 1.5; color: var(--muted-text-color); }
 
-.sidebar ul {
-    list-style: none;
-    padding-left: 0;
-}
 
-.sidebar ul li {
-    margin-bottom: 0.5rem;
-}
-
-.sidebar ul li a {
-    font-size: 0.95rem;
-    display: block;
-    padding: 0.2rem 0;
-}
-.sidebar ul li a:hover {
-    text-decoration: none;
-    color: var(--primary-hover-color);
-}
-
-.about-section p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--muted-text-color);
-}
-
-/* === Main Content === */
-.main-content {
+.main-content { /* Used within .page-wrapper */
     flex: 1;
     min-width: 0;
 }
 
+/* 2. Single-Column Layout */
+.content-container {
+    max-width: var(--content-max-width);
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    flex: 1; /* Helps push footer down */
+}
+
+/* === General Content Styles === */
 .page-title {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
@@ -234,28 +310,20 @@ h1, h2, h3, h4, h5, h6 {
 .post-card {
     background: var(--card-bg);
     padding: 1.5rem 2rem;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     margin-bottom: 2rem;
     border: 1px solid var(--border-color);
     transition: box-shadow var(--transition-speed);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-sm);
 }
-.post-card:hover {
-     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
+.post-card:hover { box-shadow: var(--shadow-md); }
 
 .post-card h3 {
     font-size: 1.5rem;
     margin-bottom: 0.3rem;
 }
-.post-card h3 a {
-    color: var(--text-color);
-    text-decoration: none;
-}
-.post-card h3 a:hover {
-    color: var(--primary-color);
-    text-decoration: underline;
-}
+.post-card h3 a { color: var(--heading-color); text-decoration: none; }
+.post-card h3 a:hover { color: var(--primary-color); text-decoration: underline; }
 
 .meta {
     font-size: 0.85rem;
@@ -270,9 +338,8 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-color);
     margin-bottom: 1rem;
 }
-.post-excerpt p:last-child {
-    margin-bottom: 0;
-}
+.post-excerpt p { margin-bottom: 0.5em; } /* Spacing for paragraphs from linebreaks */
+.post-excerpt p:last-child { margin-bottom: 0; }
 
 .read-more {
     font-size: 0.9rem;
@@ -280,9 +347,152 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     margin-top: 0.5rem;
 }
-.read-more:hover {
-    text-decoration: none;
+.read-more:hover { text-decoration: underline; }
+
+/* === Refined Blog Post Form Styling === */
+.post-new-form {
+    background: var(--card-bg);
+    padding: 2rem 2.5rem;
+    border-radius: var(--border-radius);
+    margin: 2rem 0; /* Vertical margin when used inside container */
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
 }
+
+.post-new-form h1 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin: 0 0 2rem 0;
+    color: var(--heading-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.75rem;
+    text-align: left;
+}
+
+.post-new-form form p { /* Style paragraphs generated by form.as_p */
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.post-new-form form p:last-of-type { margin-bottom: 2rem; }
+
+.post-new-form label {
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.post-new-form input[type="text"],
+.post-new-form input[type="url"],
+.post-new-form textarea,
+.post-new-form select {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color); /* Use theme border color */
+    background: var(--input-bg);
+    color: var(--text-color);
+    border-radius: var(--border-radius-sm);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    resize: vertical;
+    width: 100%;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.post-new-form input[type="text"]:focus,
+.post-new-form input[type="url"]:focus,
+.post-new-form textarea:focus,
+.post-new-form select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.25);
+    outline: none;
+    background: #fff;
+}
+
+.post-new-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23a0aec0'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.2em 1.2em;
+    padding-right: 2.5rem;
+}
+
+.post-new-form textarea {
+    min-height: 180px;
+    line-height: 1.6;
+}
+
+.post-new-form .errorlist {
+    color: var(--danger-color);
+    margin: 0.2rem 0 0 0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    list-style: none;
+    padding-left: 0;
+}
+.post-new-form .errorlist li { margin-bottom: 0.2rem; }
+
+.post-new-form .helptext {
+    font-size: 0.85rem;
+    color: var(--muted-text-color);
+    margin-top: -0.1rem;
+}
+
+.form-actions { /* Button wrapper */
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* === Refined Button Styles === */
+.btn {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+    box-shadow: var(--shadow-sm);
+    line-height: 1.5;
+    white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn:active { transform: translateY(0px); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+
+.btn.btn-primary { background-color: var(--primary-color); color: white; }
+.btn.btn-primary:hover { background-color: var(--primary-hover-color); color: white; }
+
+.btn.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--secondary-text-color);
+    border: 1px solid #cbd5e0; /* Slightly darker border for definition */
+    box-shadow: none;
+}
+.btn.btn-secondary:hover {
+    background-color: var(--secondary-hover-color);
+    border-color: #a0aec0;
+    color: #2d3748;
+    box-shadow: none;
+    transform: none;
+}
+.btn.btn-secondary:active {
+    background-color: #a0aec0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    transform: none;
+}
+
+.btn.btn-delete { background-color: var(--danger-color); color: white; }
+.btn.btn-delete:hover { background-color: var(--danger-hover-color); color: white; }
 
 
 /* === Footer === */
@@ -291,56 +501,37 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--muted-text-color);
     text-align: center;
     padding: 1.5rem;
-    margin-top: auto;
+    margin-top: auto; /* Pushes footer down because body is flex */
     border-top: 1px solid var(--border-color);
     font-size: 0.9rem;
 }
 
-
-/* === Responsiveness (Adjustments for Header/Nav) === */
+/* === Responsiveness === */
 @media (max-width: 992px) {
-    .page-wrapper {
-        gap: 1.5rem;
-    }
-    .sidebar {
-        width: 240px;
-        top: 80px;
-        max-height: calc(100vh - 95px);
-    }
-    .main-navigation ul {
-        gap: 0.5rem 1.5rem; /* Slightly reduce horizontal gap */
-    }
+    /* Adjust two-column layout */
+    .page-wrapper { gap: 1.5rem; }
+    .sidebar { width: 240px; top: 80px; max-height: calc(100vh - 95px); }
+    /* Adjust single-column layout */
+    .content-container { max-width: var(--content-max-width); /* Already set, but good to review */ }
+    /* Adjust header */
+    .main-navigation ul { gap: 0.5rem 1.2rem; }
 }
 
 @media (max-width: 768px) {
-    .site-header {
-        padding: 0.8rem 1rem;
-        position: static; /* Unstick header */
-    }
-    .header-content {
-        /* Keep row, but allow nav to wrap below if needed */
-        align-items: center; /* Re-center items vertically */
-        gap: 0.8rem; /* Adjust gap */
-    }
-    .site-title {
-        font-size: 1.5rem; /* Smaller title */
-    }
-    .tagline {
-        display: none; /* Hide tagline on small screens */
-    }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.6rem; }
+    h3 { font-size: 1.4rem; }
 
-    .main-navigation {
-         /* Allow navigation to take full width if it wraps */
-        width: 100%;
-        order: 3; /* Force nav below branding if it wraps */
-        margin-top: 0.5rem; /* Space when wrapped */
-    }
-    .main-navigation ul {
-        justify-content: center; /* Center nav items */
-        gap: 0.5rem 1.2rem; /* Adjust gaps */
-    }
+    .site-header { padding: 0.8rem 1rem; position: static; }
+    .header-content { gap: 0.5rem 1rem; }
+    .branding { flex-basis: auto; }
+    .site-title { font-size: 1.4rem; }
+    .tagline { display: none; }
+    .main-navigation { flex-grow: 1; margin-left: 0; margin-right: 0.5rem; order: 2; }
+    .main-navigation ul { justify-content: flex-start; gap: 0.4rem 1rem; }
+    .profile-dropdown-container { order: 3; }
 
-    /* --- Sidebar/Content stacking --- */
+    /* Stack two-column layout */
     .page-wrapper {
         flex-direction: column;
         margin: 1.5rem auto;
@@ -353,171 +544,320 @@ h1, h2, h3, h4, h5, h6 {
         max-height: none;
         overflow-y: visible;
         top: auto;
-        border-radius: 6px;
+        border-radius: var(--border-radius-sm);
+        order: 1;
     }
-    .main-content {
-        padding: 0;
+    .main-content { order: 2; }
+
+    /* Adjust single-column layout padding */
+    .content-container {
+         margin: 1.5rem auto;
+         padding: 0 0.75rem;
     }
-    .post-card {
-        padding: 1.2rem 1.5rem;
-        border-radius: 6px;
-    }
-    .post-card h3 {
-        font-size: 1.3rem;
-    }
+
+    .post-card { padding: 1.2rem 1.5rem; }
+    .post-card h3 { font-size: 1.3rem; }
 }
 
 @media (max-width: 480px) {
-     .site-header {
-         padding: 0.6rem 0.8rem;
-     }
-     .site-title {
-        font-size: 1.4rem;
-    }
+     h1 { font-size: 1.6rem; }
+     h2 { font-size: 1.4rem; }
+     h3 { font-size: 1.2rem; }
 
-     .main-navigation ul {
-        gap: 0.4rem 1rem; /* Further reduce gap */
-        font-size: 0.95rem; /* Slightly smaller font for nav links */
-     }
-     .main-navigation .nav-link {
-         padding: 0.3rem 0.1rem; /* Adjust padding */
-     }
+     .site-header { padding: 0.6rem 0.8rem; }
+     .header-content { gap: 0.4rem; }
+     .site-title { font-size: 1.3rem; }
+     .main-navigation { margin-right: 0.3rem; }
+     .main-navigation ul { gap: 0.3rem 0.8rem; font-size: 0.9rem; }
+     .main-navigation .nav-link { padding: 0.2rem 0.1rem; }
+     .profile-icon { width: 28px; height: 28px; }
+     .dropdown-menu { top: calc(100% + 5px); }
 
+     .page-wrapper,
+     .content-container { margin: 1rem auto; padding: 0 0.5rem; }
 
-     .page-wrapper {
-         margin: 1rem auto;
-         padding: 0 0.5rem;
+     .post-card { padding: 1rem 1.2rem; }
+     .post-card h3 { font-size: 1.2rem; }
+     .post-excerpt { font-size: 0.95rem; }
+     .meta { font-size: 0.8rem; }
+
+     .post-new-form { padding: 1.5rem 1.2rem; }
+     .post-new-form h1 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+     .form-actions { flex-direction: column; gap: 0.8rem; align-items: stretch; }
+     .btn { width: 100%; /* Full width buttons in form */ }
+     .form-actions .btn.btn-secondary { /* Ensure secondary is also full width */
+        width: 100%;
      }
-     .post-card {
-        padding: 1rem 1.2rem;
-     }
-     .post-card h3 {
-        font-size: 1.2rem;
-    }
-    .post-excerpt {
-        font-size: 0.95rem;
-    }
-    .meta {
-        font-size: 0.8rem;
-    }
 }
 
+/* login page */
 
-/* === Blog Post Form Styling - Refined Colors === */
-.post-new-form {
-    background: #fafafa;
+/* === Add these styles to base.css === */
+
+/* === Authentication Forms (Login, Signup, etc.) === */
+.auth-form {
+    background: var(--card-bg);
     padding: 2rem 2.5rem;
-    border-radius: 10px;
-    max-width: 700px;
-    margin: 0 auto;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e2e8f0;
+    border-radius: var(--border-radius);
+    margin: 3rem 0; /* More vertical margin */
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    max-width: 450px; /* Constrain width for auth forms */
+    margin-left: auto; /* Center the form box within .content-container */
+    margin-right: auto;
 }
 
-.post-new-form h1 {
-    font-size: 2rem;
+.auth-form h2 {
+    font-size: 1.6rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: #1a202c;
-    border-bottom: 2px solid #3182ce;
-    padding-bottom: 0.5rem;
-    text-align: center;
+    margin: 0 0 1.8rem 0;
+    color: var(--heading-color);
+    text-align: center; /* Center title for auth forms */
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.post-new-form form {
+/* Style paragraphs generated by form.as_p */
+.auth-form form p {
+    margin-bottom: 1.2rem; /* Spacing between fields */
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 0.3rem; /* Space between label and input */
+}
+.auth-form form p:last-of-type {
+    margin-bottom: 1.5rem; /* Space before actions */
 }
 
-.post-new-form label {
+.auth-form label {
     font-weight: 600;
-    color: #2d3748;
-    margin-bottom: 0.3rem;
-}
-
-.post-new-form input[type="text"],
-.post-new-form input[type="url"],
-.post-new-form textarea,
-.post-new-form select {
-    font-size: 1rem;
-    padding: 0.75rem 1rem;
-    border: 1px solid #cbd5e0;
-    background: #ffffff;
-    color: #2d3748;
-    border-radius: 6px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    resize: vertical;
-}
-
-.post-new-form input[type="text"]:focus,
-.post-new-form input[type="url"]:focus,
-.post-new-form textarea:focus,
-.post-new-form select:focus {
-    border-color:  var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
-    outline: none;
-}
-
-.post-new-form textarea {
-    min-height: 150px;
-}
-
-.post-new-form input[type="submit"] {
-    background-color: var(--primary-color);
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 6px;
-    padding: 0.9rem;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.post-new-form input[type="submit"]:hover {
-    background-color: var(--primary-color);
-}
-
-.post-new-form .errorlist {
-    color: #e53e3e;
-    margin-top: -0.5rem;
-    margin-bottom: 0.8rem;
+    color: #4a5568;
     font-size: 0.9rem;
+    display: block;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="password"],
+.auth-form input[type="email"] { /* Add other input types as needed */
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 1rem; /* Slightly less padding than post form */
+    border: 1px solid var(--border-color);
+    background: var(--input-bg);
+    color: var(--text-color);
+    border-radius: var(--border-radius-sm);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.auth-form input[type="text"]:focus,
+.auth-form input[type="password"]:focus,
+.auth-form input[type="email"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.25);
+    outline: none;
+    background: #fff;
+}
+
+/* Specific field errors (Django adds 'errorlist' inside the 'p') */
+.auth-form form p .errorlist {
+    color: var(--danger-color);
+    margin: 0.2rem 0 0 0;
+    font-size: 0.85rem;
+    font-weight: 500;
     list-style: none;
     padding-left: 0;
 }
+.auth-form form p .errorlist li {
+    margin-bottom: 0.2rem;
+}
+
+/* General form error summary (Optional) */
+.auth-form .error-summary {
+    background-color: #fed7d7; /* Light red background */
+    color: #742a2a; /* Dark red text */
+    border: 1px solid #fbb6b6; /* Red border */
+    border-left: 4px solid var(--danger-color); /* Thick left border */
+    padding: 0.8rem 1rem;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
 
 
-/* Base button styles */
-.btn {
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    display: inline-block;
-    margin: 10px 0;
-  }
-  
-  .btn-edit {
-    background-color: var(--primary-color);
-    color: white;
-    border: 1px solid  var(--primary-color);
-  }
-  
-  .btn-edit:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
-  
-  .btn-delete {
-    background-color: #dc3545;
-    color: white;
-    border: 1px solid #dc3545;
-  }
-  
-  .btn-delete:hover {
-    background-color: #c82333;
-    border-color: #c82333;
-  }
-  
+/* Form Actions */
+.auth-form .form-actions {
+    margin-top: 0.5rem; /* Less space above button */
+    margin-bottom: 1.5rem; /* Space below button */
+}
+
+/* Optional: Full width button for Auth forms */
+.btn.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* Links below auth form */
+.auth-links {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--muted-text-color);
+}
+
+.auth-links a {
+    color: var(--link-color);
+    margin: 0 0.5rem;
+}
+.auth-links a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+.auth-links .separator {
+    color: var(--border-color); /* Use border color for separator */
+}
+
+/* Responsive adjustments for auth forms */
+@media (max-width: 480px) {
+    .auth-form {
+        padding: 1.5rem; /* Less padding on mobile */
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    .auth-form h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+    }
+    .auth-links {
+        font-size: 0.85rem;
+    }
+    .auth-links a {
+        margin: 0 0.3rem;
+    }
+}
+
+
+/* home.html */
+
+/* === Add these styles to base.css === */
+
+/* === Hero Section (Homepage) === */
+.hero {
+    background-color: #d9534f; /* A nice red - adjust to your preference */
+    color: #fff;
+    padding: 6rem 2rem 7rem 2rem; /* Generous padding (more bottom) */
+    text-align: center;
+    position: relative; /* For potential absolute graphics */
+    overflow: hidden; /* Hide overflow from graphics */
+    /* Optional: Add a subtle gradient or background image */
+    /* background-image: linear-gradient(to bottom, #e57373, #d32f2f); */
+}
+
+.hero-content {
+    max-width: 750px; /* Limit content width */
+    margin: 0 auto; /* Center content */
+    position: relative; /* Ensure content is above potential background graphics */
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 3rem; /* Large heading */
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: #fff; /* Explicitly white */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* Subtle text shadow */
+}
+
+.hero p.tagline { /* Target the specific tagline paragraph */
+    font-size: 1.2rem; /* Larger tagline */
+    line-height: 1.7;
+    margin-bottom: 3rem; /* More space before button */
+    color: rgba(255, 255, 255, 0.95); /* Bright */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Specific Hero CTA Button */
+.btn.btn-hero { /* Style the hero button specifically */
+    padding: 0.9rem 2.5rem; /* Even more padding */
+    font-size: 1.05rem; /* Slightly larger text */
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #ffcc80; /* Lighter orange */
+    color: #5d4037; /* Dark brown text */
+    border: none;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-md);
+    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed), color var(--transition-speed);
+}
+
+.btn.btn-hero:hover {
+    background-color: #ffa726; /* Brighter orange on hover */
+    color: #3e2723; /* Slightly darker brown */
+    box-shadow: var(--shadow-lg); /* Bigger shadow */
+    transform: translateY(-2px); /* Lift */
+}
+.btn.btn-hero:active {
+    transform: translateY(0);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+}
+
+
+/* Optional: Placeholder for Features Section */
+.features-section {
+    padding: 4rem 0; /* Vertical padding */
+    background-color: var(--bg-color); /* Use standard page background */
+}
+.features-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2rem;
+}
+/* Add more styles here for feature cards/grid if needed */
+
+
+/* === Responsive Adjustments for Hero === */
+@media (max-width: 768px) {
+    .hero {
+        padding: 4rem 1rem 5rem 1rem; /* Reduce padding */
+    }
+    .hero h1 {
+        font-size: 2.2rem; /* Reduce heading size */
+    }
+    .hero p.tagline {
+        font-size: 1.1rem; /* Reduce tagline size */
+        margin-bottom: 2.5rem;
+    }
+    .btn.btn-hero {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+    .features-section {
+        padding: 3rem 0;
+    }
+    .features-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.9rem;
+    }
+     .hero p.tagline {
+        font-size: 1rem;
+    }
+    .btn.btn-hero {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* === Ensure ALL previous CSS rules are still present === */
+/* ... :root, base styles, header, nav, profile, layouts, forms, buttons, footer ... */

@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}Log In - CodeCanvas{% endblock title %}
+
+{% block content %}
+    <div class="content-container"> {# Use the single-column container #}
+        <div class="auth-form login-form"> {# Use a common class 'auth-form' and specific 'login-form' #}
+            <h2>Log In</h2>
+            {% if form.errors %}
+                <p class="error-summary">Your username and password didn't match. Please try again.</p>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }} {# Renders fields with labels in <p> tags #}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">Log In</button> {# Use button classes #}
+                </div>
+                <div class="auth-links">
+                    <a href="#">Forgot password?</a> {# TODO: Add password reset URL #}
+                    <span class="separator">|</span>
+                    <a href="{% url "signup" %}">Sign up</a> {# TODO: Add sign up URL #}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

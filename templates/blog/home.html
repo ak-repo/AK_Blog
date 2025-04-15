@@ -1,0 +1,39 @@
+{% extends "blog/base.html" %} {# Or just "base.html" depending on setup #}
+{% load static %}
+
+{% block title %}Publish Your Passions - CodeCanvas{% endblock title %}
+
+
+{% block content %}
+{# Add a class to body if you uncommented the style above #}
+{# <script>document.body.classList.add('homepage');</script> #}
+
+<section class="hero">
+    
+    <div class="hero-background-graphics">
+        <img src="{% static 'images/graphic-left.svg' %}" alt="" class="graphic graphic-left">
+    </div>
+
+    <div class="hero-content">
+        <h1>Publish your passions, your way</h1>
+        <p class="tagline">Create a unique and beautiful blog easily with CodeCanvas.</p>
+        {# Link to create a new post if logged in, or signup page if not #}
+        {% if user.is_authenticated %}
+            <a href="{% url 'post_new' %}" class="btn btn-hero">Start Writing</a>
+        {% else %}
+             {# Make sure you have a URL named 'signup' #}
+            <a href="{% url 'signup' %}" class="btn btn-hero">Create Your Blog</a>
+        {% endif %}
+    </div>
+</section>
+
+{# Optional: Add more sections below the hero #}
+<section class="features-section">
+    <div class="content-container"> {# Use the standard content container #}
+        <h2>Features Overview</h2>
+        <p>recent</p>
+        {# Add grid/cards for features or link to recent posts #}
+    </div>
+</section>
+
+{% endblock content %}
