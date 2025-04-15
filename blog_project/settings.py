@@ -121,11 +121,11 @@ STATIC_URL = "/static/"
 
 # Static files source dir (for development)
 STATICFILES_DIRS = [
-    BASE_DIR / "staticfiles"
-]  # <- rename or change to a separate folder
+    BASE_DIR / "static"
+] 
 
 # Static files destination (for collectstatic in production)
-STATIC_ROOT = BASE_DIR / "static"  # <- this is where everything gets collected
+STATIC_ROOT = BASE_DIR / "static_collected" 
 
 
 # Default primary key field type
