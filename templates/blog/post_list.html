@@ -12,17 +12,13 @@
                 <h3>Recent Posts</h3>
                 <ul>
                     {# Ensure 'posts' (recent posts) is passed to this view's context #}
-                    {% for post in posts %}
+                    {% for post in post_list %}
                     <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
                     {% empty %}
                     <li>No recent posts found.</li>
                     {% endfor %}
                 </ul>
             </nav>
-            <section class="about-section">
-                <h3>About</h3>
-                <p>Hi, I'm AK — a software engineer who builds and writes about full-stack systems and dev tools.</p>
-            </section>
         </aside>
 
         <main class="main-content">
@@ -31,7 +27,14 @@
             {% for post in post_list %}
             <article class="post-card">
                 <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-                <p class="meta">{{ post.created_date|date:"F d, Y" }}</p>
+                <small>
+                    {% if post.author %}
+                         By {{ post.author.username }}
+                    {% else %}
+                         By Unknown Author
+                    {% endif %}
+                    on {{ post.created_date|date:"F j, Y" }}
+                </small>
                 <div class="post-excerpt">
                     {{ post.text|linebreaks|truncatewords:50 }}
                 </div>
@@ -40,7 +43,7 @@
             {% empty %}
                 <p>No posts have been published yet.</p>
             {% endfor %}
-            <a href="{% url 'post_new' %}" class="btn btn-hero">Start Writing</a>
+            <a href="{% url 'blog:post_new' %}" class="btn btn-hero">Start Writing</a>
         </main>
 
     </div>

@@ -1,39 +1,118 @@
-{% extends "blog/base.html" %} {# Or just "base.html" depending on setup #}
+{% extends "blog/base.html" %} {# Assumes base.html defines 'body_content' block #}
 {% load static %}
 
-{% block title %}Publish Your Passions - CodeCanvas{% endblock title %}
+{% block title %}Your Voice, Your Code, Your Canvas - CodeCanvas{% endblock title %}
 
 
-{% block content %}
-{# Add a class to body if you uncommented the style above #}
-{# <script>document.body.classList.add('homepage');</script> #}
 
-<section class="hero">
-    
-    <div class="hero-background-graphics">
+{% block content %} {# Use the block name defined in your base.html #}
+{# <script>document.body.classList.add('homepage');</script> #} {# Use if uncommenting style in extra_head #}
+
+    {# === Hero Section === #}
+    <section class="hero">
+        {# Individual Graphics - Absolutely Positioned via CSS #}
+        {# Ensure images exist at 'static/images/...' #}
         <img src="{% static 'images/graphic-left.svg' %}" alt="" class="graphic graphic-left">
-    </div>
+        <img src="{% static 'images/graphic-right.svg' %}" alt="" class="graphic graphic-right">
 
-    <div class="hero-content">
-        <h1>Publish your passions, your way</h1>
-        <p class="tagline">Create a unique and beautiful blog easily with CodeCanvas.</p>
-        {# Link to create a new post if logged in, or signup page if not #}
-        {% if user.is_authenticated %}
-            <a href="{% url 'post_new' %}" class="btn btn-hero">Start Writing</a>
-        {% else %}
-             {# Make sure you have a URL named 'signup' #}
-            <a href="{% url 'signup' %}" class="btn btn-hero">Create Your Blog</a>
-        {% endif %}
-    </div>
-</section>
+        {# Text Content Container #}
+        <div class="hero-content">
+            <h1>Your Voice, Your Code, Your Canvas</h1>
+            <p class="tagline">The developer blogging platform focused on clarity, community, and creation.</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'blog:post_new' %}" class="btn btn-hero">Start Writing</a>
+            {% else %}
+                <a href="{% url 'user:signup' %}" class="btn btn-hero">Create Your Blog</a>
+            {% endif %}
+        </div>
+    </section>
 
-{# Optional: Add more sections below the hero #}
-<section class="features-section">
-    <div class="content-container"> {# Use the standard content container #}
-        <h2>Features Overview</h2>
-        <p>recent</p>
-        {# Add grid/cards for features or link to recent posts #}
-    </div>
-</section>
+    {# === Intro Section === #}
+    <section class="intro-section">
+        <div class="content-container">
+            <h2>What is CodeCanvas?</h2>
+            <p>
+                CodeCanvas is a developer-focused blog platform where you can express your thoughts, share tutorials,
+                document projects, and connect with a like-minded audience — all through a clean, minimal interface designed for clarity and focus.
+            </p>
+        </div>
+    </section>
+
+    {# === How It Works Section === #}
+    <section class="how-it-works-section">
+        <div class="content-container">
+            <h2>Get Started in 3 Simple Steps</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon"></div>
+                    <h3>1. Sign Up</h3>
+                    <p>Create your free account in seconds and set up your writing space.</p>
+                    {# <a href="{% url 'users:signup' %}" class="step-link">Sign Up Now →</a> #}
+                </div>
+                <div class="step">
+                     <div class="step-icon"></div>
+                    <h3>2. Write</h3>
+                    <p>Use our intuitive editor to craft posts with rich text, code blocks, and images.</p>
+                    {# <a href="#" class="step-link">Editor Guide →</a> #}
+               </div>
+                <div class="step">
+                     <div class="step-icon"></div>
+                    <h3>3. Publish</h3>
+                    <p>Share your knowledge and stories with the CodeCanvas community and the wider web.</p>
+                    {# <a href="{% url 'blog:post_list' %}" class="step-link">Explore Blogs →</a> #}
+               </div>
+            </div>
+        </div>
+    </section>
+
+    {# === Features/Category Section Placeholder === #}
+    <section class="features-section">
+        <div class="content-container">
+            <h2>Explore Topics</h2>
+            <p style="text-align: center; color: var(--muted-text-color);">
+                Discover articles on various topics shared by our community.
+            </p>
+            <div class="category-links-placeholder">
+                <a href="#" class="btn btn-secondary">Web Development</a>
+                <a href="#" class="btn btn-secondary">Python</a>
+                <a href="#" class="btn btn-secondary">Data Science</a>
+                <a href="#" class="btn btn-secondary">DevOps</a>
+                <a href="#" class="btn btn-secondary">Cloud</a>
+                <a href="#" class="btn btn-secondary">Tutorials</a>
+            </div>
+        </div>
+    </section>
+
+    {# === Recent Posts Section === #}
+    <section class="recent-posts-section">
+        <div class="content-container">
+            <h2>Latest Posts</h2>
+            {% if posts %}
+                <ul class="post-list">
+                    {% for post in posts|slice:":4" %}
+                        <li>
+                            <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                            <p>{{ post.text|striptags|truncatewords:30 }}</p>
+                            <small>
+                                {% if post.author %}
+                                     By {{ post.author.username }}
+                                {% else %}
+                                     By Unknown Author
+                                {% endif %}
+                                on {{ post.created_date|date:"F j, Y" }}
+                            </small>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% if posts|length > 4 %}
+                    <div class="view-all-link">
+                        <a href="{% url 'blog:post_list' %}" class="btn btn-primary">View All Posts</a>
+                    </div>
+                {% endif %}
+            {% else %}
+                <p class="no-posts-message">No posts have been published yet. Why not <a href="{% url 'users:signup' %}">sign up</a> and write the first one?</p>
+            {% endif %}
+        </div>
+    </section>
 
 {% endblock content %}

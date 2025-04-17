@@ -10,6 +10,9 @@ from .models import Post
 class HomeView(TemplateView):
     template_name = "blog/home.html"
 
+class AboutView(TemplateView):
+    template_name = "blog/about.html"
+
 
 class BloglistView(ListView):
     model = Post
@@ -25,7 +28,7 @@ class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = "blog/post_new.html"
     fields = ["title", "text"]  # Don't include 'author'
-    success_url = reverse_lazy("post_list")  # Update if needed
+    success_url = reverse_lazy("blog:post_list")  # Update if needed
 
     def form_valid(self, form):
         form.instance.author = self.request.user  # Assign the logged-in user as author
@@ -41,20 +44,6 @@ class BlogUpdateView(UpdateView):
 class BlogDeleteView(DeleteView):
     model = Post
     template_name = "blog/post_delete.html"
-    success_url = reverse_lazy("post_list")
+    success_url = reverse_lazy("blog:post_list")
 
 
-# from django.shortcuts import render, get_object_or_404
-
-# from .models import Post
-
-# # Create your views here.
-
-
-# def post_list(request):
-#     posts = Post.objects.all()
-#     return render(request, "blog/post_list.html", {"posts": posts})
-
-# def post_detail(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     return render(request, "blog/post_detail.html", {"post": post})

@@ -16,17 +16,17 @@
         <div class="header-content">
             <div class="branding">
                 {# Link site title to the blog list page #}
-                <h1 class="site-title"><a href="">Code<span>Canvas</span></a></h1>
+                <h1 class="site-title"><a href="{% url "blog:home" %}">Code<span>Canvas</span></a></h1>
                 <p class="tagline">Exploring software development, one commit at a time.</p>
             </div>
 
             <nav class="main-navigation" aria-label="Main navigation">
                 <ul>
-                    <li><a href="{% url "home" %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
-                    <li><a href="{% url 'post_list' %}" class="nav-link {% if request.resolver_match.url_name == 'post_list' or request.resolver_match.url_name == 'post_detail' %}active{% endif %}">Blog</a></li>
+                    <li><a href="{% url "blog:home" %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+                    <li><a href="{% url 'blog:post_list' %}" class="nav-link {% if request.resolver_match.url_name == 'post_list' or request.resolver_match.url_name == 'post_detail' %}active{% endif %}">Blog</a></li>
                     {# TODO: Create views/URLs and update href for About/Contact #}
-                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
-                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
+                    <li><a href="{% url "blog:about" %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'events' %}active{% endif %}">Events</a></li>
                     {% comment %} {% if user.is_authenticated %}
                     <li><a href="{% url 'post_new' %}" class="nav-link {% if request.resolver_match.url_name == 'post_new' %}active{% endif %}">New Post</a></li>
                     {% endif %} {% endcomment %}
@@ -38,7 +38,7 @@
                 <img src="{% static 'images/profile.svg' %}" alt="Profile Menu" class="profile-icon" onclick="toggleDropdown()" />
                 <div id="profileDropdown" class="dropdown-menu hidden">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'post_new' %}">New Blog</a>
+                        <a href="{% url 'blog:post_new' %}">New Blog</a>
                         <a href="#">Profile</a>  {# Replace with actual profile URL when ready #}
 
                         <form action="{% url 'logout' %}" method="post" style="display: inline;">
@@ -49,7 +49,7 @@
                         </form>
                     {% else %}
                         <a href="{% url 'login' %}">Login</a>
-                        <a href="{% url "signup" %}">Sign Up</a>  {# If you have a signup view #}
+                        <a href="{% url "user:signup" %}">Sign Up</a>  {# If you have a signup view #}
                     {% endif %}
 
                 </div>
